@@ -1,0 +1,121 @@
+
+<div id="content-container" class="container">
+    <div class="row">
+        <div class="col-md-3">
+            {include file="common/sidenav" /}
+        </div>
+        <div class="col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h2 class="page-header">{:__('Released Config')}</h2>
+                    <form id="release-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="released_config" data-ajax="1">
+                        {:token()}
+                        <input type="hidden" name="ajax" value="1"/>
+                        <!-- 主题设置 -->
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">用户主题:</label>
+                            <div class="col-xs-12 col-sm-4">
+                                <select class="form-control" name="theme" id="theme" data-rule="required">
+                                    <option value="子比主题" {if isset($config.theme_settings.theme) && $config.theme_settings.theme=='子比主题'}selected{/if}>子比主题</option>
+                                    <option value="日主题" {if isset($config.theme_settings.theme) && $config.theme_settings.theme=='日主题'}selected{/if}>日主题</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">发布网站:</label>
+                            <div class="col-xs-12 col-sm-4">
+                                <input type="url" class="form-control" name="website" id="website" data-rule="required;url" 
+                                    value="{$config.theme_settings.website|default=''}" placeholder="请输入完整的网址，包含http(s)://" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">发布秘钥:</label>
+                            <div class="col-xs-12 col-sm-4">
+                                <input type="text" class="form-control" name="publish_key" id="publish_key" data-rule="required" 
+                                    value="{$config.theme_settings.publish_key|default=''}" />
+                            </div>
+                        </div>
+
+                        <!-- 项目价格设置 -->
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">付费模式:</label>
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="pay_mode" value="download" {if !isset($config.price_settings.pay_mode) || $config.price_settings.pay_mode=='download'}checked{/if}>
+                                        付费下载
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="pay_mode" value="read" {if isset($config.price_settings.pay_mode) && $config.price_settings.pay_mode=='read'}checked{/if}>
+                                        付费阅读
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">普通用户价格:</label>
+                            <div class="col-xs-12 col-sm-4">
+                                <input type="number" class="form-control" name="normal_price" id="normal_price" data-rule="required"
+                                    value="{$config.price_settings.normal_price|default=''}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">VIP用户价格:</label>
+                            <div class="col-xs-12 col-sm-4">
+                                <input type="number" class="form-control" name="vip_price" id="vip_price" data-rule="required"
+                                    value="{$config.price_settings.vip_price|default=''}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">SVIP用户价格:</label>
+                            <div class="col-xs-12 col-sm-4">
+                                <input type="number" class="form-control" name="svip_price" id="svip_price" data-rule="required"
+                                    value="{$config.price_settings.svip_price|default=''}" />
+                            </div>
+                        </div>
+
+                        <!-- 分类映射设置 -->
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">中创网:</label>
+                            <div class="col-xs-12 col-sm-4">
+                                <input type="text" class="form-control" name="zhongchuang" id="zhongchuang" data-rule="required"
+                                    value="{$config.category_mapping.zhongchuang|default=''}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">冒泡网:</label>
+                            <div class="col-xs-12 col-sm-4">
+                                <input type="text" class="form-control" name="maopao" id="maopao" data-rule="required"
+                                    value="{$config.category_mapping.maopao|default=''}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">福缘论坛:</label>
+                            <div class="col-xs-12 col-sm-4">
+                                <input type="text" class="form-control" name="fuyuan" id="fuyuan" data-rule="required"
+                                    value="{$config.category_mapping.fuyuan|default=''}" />
+                            </div>
+                        </div>
+
+                        <div class="form-group normal-footer">
+                            <label class="control-label col-xs-12 col-sm-2"></label>
+                            <div class="col-xs-12 col-sm-8">
+                                <button type="submit" class="btn btn-success btn-embossed">{:__('Submit')}</button>
+                                <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    require(['frontend/user'], function (Controller) {
+        Controller.released_config();
+    });
+</script>

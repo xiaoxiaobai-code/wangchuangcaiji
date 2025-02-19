@@ -1,0 +1,20 @@
+{extend name="layout/default" /}
+
+{block name="content"}
+<!-- 保持其他内容不变 -->
+{/block}
+
+{block name="scripts"}
+<script>
+    require(['jquery', 'frontend', 'form'], function ($, Frontend, Form) {
+        var Controller = {
+            pushconfig: function () {
+                $('#release-form').on('submit', function(e){
+                    // ... 这里的代码和 user.js 中的相同 ...
+                });
+            }
+        };
+        Controller.pushconfig();
+    });
+</script>
+{/block} 

@@ -1,0 +1,2 @@
+INSERT INTO `fa_auth_rule` (`pid`, `name`, `title`, `icon`, `condition`, `remark`, `ismenu`, `createtime`, `updatetime`, `weigh`, `status`) VALUES
+(0, 'zhongchuangconfig', '中创采集配置', 'fa fa-cog', '', '中创采集配置管理', 1, 1616990000, 1616990000, 0, 'normal'); 
